@@ -1,6 +1,6 @@
 #!/usr/bin.env groovy
 
-pipeline {   
+pipeline {
     agent any
     stages {
         stage("test") {
@@ -26,7 +26,9 @@ pipeline {
                     sshagent(['ec2-server-key']) {
                         sh "ssh -o StrictHostKeyChecking=no ec2-user@34.253.208.5 ${dockerCmd}"
                     }
+                }
             }
-        }               
+        }
     }
-} 
+
+}
