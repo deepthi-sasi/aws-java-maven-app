@@ -1,4 +1,4 @@
-FROM arm64v8/amazoncorretto:17-alpine-jdk
+FROM --platform=linux/arm64 amazoncorretto:17-alpine-jdk
 
 EXPOSE 8080
 
