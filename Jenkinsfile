@@ -2,8 +2,8 @@
 
 library identifier: 'jenkins-shared-library@master', retriever: modernSCM(
         [$class       : 'GitSCMSource',
-         remote       : 'https://gitlab.com/twn-devops-bootcamp/latest/09-aws/jenkins-shared-library.git',
-         credentialsID: 'gitlab-credentials'
+         remote       : 'git@github.com:deepthi-sasi/jenkins-shared-library.git',
+         credentialsID: 'ba7d5282-250d-4453-8267-b1a5fb20dbad'
         ]
 )
 
