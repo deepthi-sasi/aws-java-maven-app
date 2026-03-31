@@ -67,7 +67,7 @@ pipeline {
         stage('Commit Version Update') {
             steps {
                 script {
-                    withCredentials([usernamePassword(credentialsId: 'GitHub', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
+                    withCredentials([usernamePassword(credentialsId: 'ba7d5282-250d-4453-8267-b1a5fb20dbad', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
                         sh "git remote set-url origin https://${USER}:${PASS}@github.com/deepthi-sasi/aws-java-maven-app.git"
                         sh 'git add .'
                         sh 'git commit -m "jenkins: version bump'
