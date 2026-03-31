@@ -1,4 +1,5 @@
 #!/usr/bin/env groovy
+import org.apache.catalina.util.URLEncoder
 
 library identifier: 'jenkins-shared-library@main', retriever: modernSCM(
         [$class       : 'GitSCMSource',
@@ -68,12 +69,17 @@ pipeline {
             steps {
                 script {
                     withCredentials([usernamePassword(credentialsId: 'ba7d5282-250d-4453-8267-b1a5fb20dbad', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
+                        script {
+                            env.encodePass=URLEncoder.encode(PASS, "UTF-8")
+                        }
+
+
                         sh 'git config --global user.email "jenkins@example.com"'
                         sh 'git config --global user.name "jenkins"'
                         sh "git remote set-url origin https://${USER}:${PASS}@github.com/deepthi-sasi/aws-java-maven-app.git"
                         sh 'git add .'
                         sh 'git commit -m "jenkins: version bump"'
-                        sh 'git push origin HEAD:main'
+                        sh 'git push origin HEAD:jenkins-jobs'
                     }
                 }
             }
