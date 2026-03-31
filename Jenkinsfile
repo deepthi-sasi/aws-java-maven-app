@@ -73,7 +73,7 @@ pipeline {
                         sh "git remote set-url origin https://${USER}:${PASS}@github.com/deepthi-sasi/aws-java-maven-app.git"
                         sh 'git add .'
                         sh 'git commit -m "jenkins: version bump"'
-                        sh 'git push origin HEAD:jenkins-jobs'
+                        sh 'git push origin HEAD:main'
                     }
                 }
             }
