@@ -3,7 +3,7 @@
 pipeline {   
     agent any
     stages {
-        stage("test") {
+        stage('test') {
             steps {
                 script {
                     echo "Testing the application..."
@@ -11,7 +11,7 @@ pipeline {
                 }
             }
         }
-        stage("build") {
+        stage('build') {
             steps {
                 script {
                     echo "Building the application..."
@@ -19,7 +19,7 @@ pipeline {
             }
         }
 
-        stage("deploy") {
+        stage('deploy') {
             environment {
                 AWS_ACCESS_KEY_ID = credentials('jenkins_aws_access_key_id')
                 AWS_SECRET_ACCESS_KEY = credentials('jenkins-aws_secret_access_key')
