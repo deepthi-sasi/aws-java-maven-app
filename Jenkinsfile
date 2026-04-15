@@ -8,13 +8,16 @@ library identifier: 'jenkins-shared-library@main', retriever: modernSCM(
 )
 pipeline {
     agent any
-    tools {
-        maven 'maven3.9'
-    }
-
-    stages {
-        stage("Increment Version") {
-            steps {
+        tools {
+            maven 'maven3.9'
+        }
+        environment {
+            DOCKER_REPO_SERVER = '330673547330.dkr.ecr.eu-central-1.amazonaws.com'
+            DOCKER_REPO = "${DOCKER_REPO_SERVER}/java-maven-app"
+        }
+        stages {
+            stage("Increment Version") {
+                steps {
                 script {
                     echo 'incrementing the bugfix version of the application...'
                     sh 'mvn build-helper:parse-version versions:set \
@@ -23,7 +26,7 @@ pipeline {
 
                     def matcher = readFile('pom.xml') =~ '<version>(.+)</version>'
                     def version = matcher[0][1]
-                    env.IMAGE_NAME = "deepthisasi/demo-app:java-maven-app-$version-$BUILD_NUMBER"
+                    env.IMAGE_NAME = "$DOCKER_REPO:java-maven-app-$version-$BUILD_NUMBER"
                 }
             }
         }
@@ -40,9 +43,12 @@ pipeline {
             steps {
                 script {
                     echo 'building the docker image...'
-                    buildImage(env.IMAGE_NAME)
-                    dockerLogin()
-                    dockerImagePush(env.IMAGE_NAME)
+                    withCredentials([usernamePassword(credentialsId: 'ecr-credentials', passwordVariable: 'PASS', usernameVariable: 'USER')]){
+                        //sh "docker build -t ${DOCKER_REPO}:${IMAGE_NAME} ."
+                        buildImage(env.IMAGE_NAME)
+                        dockerLoginInToHost($USER, $PASS, env.DOCKER_REPO_SERVER)
+                        dockerImagePush(env.IMAGE_NAME)
+                    }
                 }
             }
         }
