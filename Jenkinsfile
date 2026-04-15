@@ -6,7 +6,6 @@ library identifier: 'jenkins-shared-library@main', retriever: modernSCM(
          credentialsID: 'ba7d5282-250d-4453-8267-b1a5fb20dbad'
         ]
 )
-
 pipeline {
     agent any
     tools {
