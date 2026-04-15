@@ -43,8 +43,9 @@ pipeline {
             steps {
                 script {
                     echo 'building the docker image...'
-                    withCredentials([usernamePassword(credentialsId: 'ecr-credentials', passwordVariable: 'PASS', usernameVariable: 'USER')]){
+                    withCredentials([usernamePassword(credentialsId: 'ecr-credentials', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
                         //sh "docker build -t ${DOCKER_REPO}:${IMAGE_NAME} ."
+                        echo "${USER}"
                         buildImage(env.IMAGE_NAME)
                         dockerLoginInToHost($USER, $PASS, env.DOCKER_REPO_SERVER)
                         dockerImagePush(env.IMAGE_NAME)
