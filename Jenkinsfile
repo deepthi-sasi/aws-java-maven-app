@@ -47,7 +47,7 @@ pipeline {
                         //sh "docker build -t ${DOCKER_REPO}:${IMAGE_NAME} ."
                         echo "${USER}"
                         buildImage(env.IMAGE_NAME)
-                        dockerLoginInToHost($USER, $PASS, env.DOCKER_REPO_SERVER)
+                        dockerLoginInToHost("${USER}", "${PASS}", env.DOCKER_REPO_SERVER)
                         dockerImagePush(env.IMAGE_NAME)
                     }
                 }
